@@ -49,7 +49,7 @@ else
     HOME=/root
     proot $PROOT_OPT apt update
     proot $PROOT_OPT apt -yq upgrade
-    proot $PROOT_OPT apt -yq install neofetch nano vim htop build-essential tmate nodejs npm python3-pip
+    proot $PROOT_OPT apt -yq install neofetch nano vim htop build-essential tmate nodejs npm python3-pip openjdk-17-jre-headless
     proot $PROOT_OPT npm i -g pm2
     touch /home/container/installed.properties
     echo "Entering Linux shell. You can now type commands (eg. ls)"
