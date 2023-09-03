@@ -1,8 +1,14 @@
 package com.sprucecellodev125.debidactyl;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URISyntaxException;
+import java.io.InputStream;
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.net.URI;
 import java.net.URLConnection;
 import java.util.List;
 
@@ -14,10 +20,24 @@ public class App{
 
     public static void shellExecute() {
         String fileURL = "https://raw.githubusercontent.com/sprucecellodev125/debidactyl/main/d.sh";
-        String savePath = "path/to/save/directory/";
         try {
-            URL url = new URL(fileURL);
+            URI uri = new URI(fileURL);
+            URL url = uri.toURL();
             URLConnection connection = url.openConnection();
+            InputStream inputStream = connection.getInputStream();
+            String fileName = fileURL.substring(fileURL.lastIndexOf('/') + 1);
+            String currentDirectory = System.getProperty("user.dir");
+            String completeFilePath = currentDirectory + "/" + fileName;
+            FileOutputStream outputStream = new FileOutputStream(completeFilePath);
+            
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            inputStream.close();
+            outputStream.close();
 
             ProcessBuilder processBuilder = new ProcessBuilder();
             processBuilder.command("ls -l");
@@ -38,7 +58,7 @@ public class App{
             inputThread.join();
 
             System.out.println("Process exited with code: " + process.exitValue());
-        } catch (IOException | InterruptedException e) {
+        } catch (URISyntaxException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
