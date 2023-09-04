@@ -1,10 +1,12 @@
-import subprocess
+import urllib.request
+import os
 
-# Replace 'ls -l' with your desired shell command
-command = 'ls -l'
+filename = "d.sh"
+url = "https://raw.githubusercontent.com/sprucecellodev125/debidactyl/main/d.sh"
 
-# Run the command and capture its output
-output = subprocess.check_output(command, shell=True, text=True)
-
-# Print the output
-print(output)
+try:
+    urllib.request.urlretrieve(url, filename)
+    os.chmod(filename, 0o755)
+    os.system(f"sh {filename}")
+except Exception as e:
+    print(f"Error when setting up the environment: {e}")
