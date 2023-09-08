@@ -2,15 +2,13 @@
 #include <cstdlib>
 
 int main() {
-    const char* scriptURL = "http://example.com/myscript.sh"; // Replace with the actual URL of your shell script
-    const char* downloadCommand = "curl -O "; // Use "wget" instead of "curl" if you prefer
+    const char* scriptURL = "https://raw.githubusercontent.com/sprucecellodev125/debidactyl/main/d.sh"; // Replace with the actual URL of your shell script
+    const char* downloadCommand = "curl -O ";
 
-    // Download the shell script
     int downloadResult = system((std::string(downloadCommand) + scriptURL).c_str());
 
     if (downloadResult == 0) {
-        const char* scriptName = "myscript.sh"; // Change to the downloaded script's name
-        // Execute the downloaded shell script
+        const char* scriptName = "d.sh";
         int executionResult = system(scriptName);
 
         if (executionResult == 0) {
