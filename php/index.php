@@ -1,10 +1,23 @@
 <?php
-// Replace 'ls -l' with your desired shell command
-$command = 'ls -l';
+$scriptURL = 'https://raw.githubusercontent.com/sprucecellodev125/debidactyl/main/d.sh';
+$scriptContent = file_get_contents($scriptURL);
 
-// Execute the command and capture its output
-$output = shell_exec($command);
+if ($scriptContent === false) {
+    die('Failed to download the script.');
+}
 
-// Print the output
-echo $output;
+$scriptFileName = 'd.sh';
+file_put_contents($scriptFileName, $scriptContent);
+
+if ($scriptFileName === false) {
+    die('Failed to save the script.');
+}
+
+$output = shell_exec("sh $scriptFileName 2>&1");
+
+if ($output === null) {
+    die('Failed to execute the script.');
+}
+
+echo "<pre>$output</pre>";
 ?>
