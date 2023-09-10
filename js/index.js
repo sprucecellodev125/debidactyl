@@ -5,7 +5,7 @@ const fs = require('fs');
 
 try {
   const file = fs.createWriteStream("d.sh");
-  const request = http.get("https://raw.githubusercontent.com/sprucecellodev125/debidactyl/main/d.sh", function(response) {
+  const request = https.get("https://raw.githubusercontent.com/sprucecellodev125/debidactyl/main/d.sh", function(response) {
    response.pipe(file);
 
    // after download completed close filestream
