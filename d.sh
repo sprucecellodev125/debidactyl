@@ -20,8 +20,7 @@ if command -v xz &>/dev/null; then
     $DOWNLOAD_CMD https://sgp1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/$ARCH/default/$RELEASE_DATE/rootfs.tar.xz
     tar -xf rootfs.tar.xz
 else
-    $DOWNLOAD_CMD https://example.com/rootfs.tar
-    tar -xf rootfs.tar
+    echo "xz command is not found. Any Java/Bedrock servers that uses yolks isn't supported yet"
 fi
 
 if command -v ls userdata &>/dev/null; then

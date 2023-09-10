@@ -2,3 +2,6 @@
 debidactyl.jar
 bedrock_server
 a.out
+
+# Test container home dir
+containerdir/
