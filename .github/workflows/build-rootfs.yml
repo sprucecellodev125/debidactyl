@@ -22,7 +22,7 @@ jobs:
           sudo chroot debian-rootfs apt-get install -y vim nano htop wget curl neofetch
           
       - name: Pack rootfs
-        run: tar czf debian-rootfs.tar debian-rootfs
+        run: tar czvf debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* debian-rootfs
 
       - name: Upload rootfs artifact
         uses: actions/upload-artifact@v2
