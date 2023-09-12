@@ -1,0 +1,31 @@
+name: Build Debian RootFS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install debootstrap
+        run: sudo apt-get update && sudo apt-get install -y debootstrap
+
+      - name: Create Debian rootfs
+        run: |
+          sudo debootstrap --arch=amd64 stable debian-rootfs
+          sudo chroot debian-rootfs apt-get install -y vim nano htop wget curl neofetch
+          
+      - name: Pack rootfs
+        run: tar czf debian-rootfs.tar debian-rootfs
+
+      - name: Upload rootfs artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: debian-rootfs
+          path: debian-rootfs.tar
