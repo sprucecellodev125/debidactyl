@@ -18,14 +18,16 @@ jobs:
 
       - name: Create Debian rootfs
         run: |
-          sudo debootstrap --arch=amd64 stable debian-rootfs
-          sudo chroot debian-rootfs apt-get install -y vim nano htop wget curl neofetch
+          sudo debootstrap --arch=amd64 --include=vim,nano,htop,wget,curl,neofetch stable rootfs/debian-rootfs
           
       - name: Pack rootfs
-        run: tar czvf debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* debian-rootfs || true
+        run: |
+          tar czvf rootfs/debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* rootfs/debian-rootfs || true
+          rm -rf rootfs/debian-rootfs
 
-      - name: Upload rootfs artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: debian-rootfs
-          path: debian-rootfs.tar
+      - name: Upload rootfs to repository
+        run: |
+          git lfs track "*.tar"
+          git add rootfs/debian-rootfs.tar
+          git commit -m "Uploaded rootfs image"
+          git push origin main
