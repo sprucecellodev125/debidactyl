@@ -10,9 +10,11 @@ fi
 
 $DOWNLOAD_CMD https://proot.gitlab.io/proot/bin/proot
 
+echo "Downloading rootfs, please wait ..."
 mkdir -p .rootfs
 cd .rootfs
 $DOWNLOAD_CMD https://media.githubusercontent.com/media/sprucecellodev125/debidactyl/main/rootfs/debian-rootfs.tar
+tar -xf debian-rootfs.tar; rm debian-rootfs.tar
 cd ../; mkdir -p userdata/
 
 PROOT_OPT="-0 \
