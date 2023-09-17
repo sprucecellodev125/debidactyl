@@ -26,7 +26,8 @@ jobs:
           
       - name: Pack rootfs
         run: |
-          cd rootfs/; tar czvf debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* --exclude=dev/* debian-rootfs || true
+          cd rootfs/debian-rootfs/; tar czvf debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* --exclude=dev/* . || true
+          cd rootfs/debian-rootfs/; mv debian-rootfs.tar ../
           rm -rf rootfs/debian-rootfs
 
       - name: Commit rootfs
