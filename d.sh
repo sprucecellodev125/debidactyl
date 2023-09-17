@@ -8,19 +8,11 @@ else
     echo "Wget or curl isn't installed. Setup cannot continue"
 fi
 
-if command -v ls /home/container/installed.properties &>/dev/null; then
+if ls /home/container/installed.properties &>/dev/null; then
 	true
 else
 	$DOWNLOAD_CMD https://proot.gitlab.io/proot/bin/proot
 fi
-
-echo "Downloading rootfs, please wait ..."
-mkdir -p .rootfs
-cd .rootfs
-$DOWNLOAD_CMD https://media.githubusercontent.com/media/sprucecellodev125/debidactyl/main/rootfs/debian-rootfs.tar
-tar -xf debian-rootfs.tar; rm debian-rootfs.tar
-cd ../; mkdir -p userdata/
-chmod +x proot
 
 PROOT_OPT="-0 \
 -r $HOME/.rootfs \
@@ -32,12 +24,18 @@ PROOT_OPT="-0 \
 -b /home/container/userdata:/root
 "
 
-if command -v ls /home/container/installed.properties &>/dev/null; then
+if ls /home/container/installed.properties &>/dev/null; then
     echo "Entering Linux shell. You can now type commands (eg. ls)"
     HOME=/root
     ./proot $PROOT_OPT bash
 else
-    echo "Entering initial setup. Please wait"
+    echo "Entering initial setup. Please wait ..."
+    mkdir -p .rootfs
+    cd .rootfs
+    $DOWNLOAD_CMD https://media.githubusercontent.com/media/sprucecellodev125/debidactyl/main/rootfs/debian-rootfs.tar
+    tar -xf debian-rootfs.tar; rm debian-rootfs.tar
+    cd ../; mkdir -p userdata/
+    chmod +x proot
     HOME=/root
     ./proot $PROOT_OPT apt update
     ./proot $PROOT_OPT apt -yq upgrade
