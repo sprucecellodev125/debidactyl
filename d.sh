@@ -21,6 +21,7 @@ PROOT_OPT="-0 \
 -b /proc \
 -b /run/user \
 -b /tmp \
+-b /etc/resolv.conf \
 -b /home/container/userdata:/root
 "
 
