@@ -18,11 +18,11 @@ jobs:
 
       - name: Create Debian rootfs
         run: |
+          mkdir -p rootfs/
           sudo debootstrap --arch=amd64 --include=vim,nano,htop,wget,curl,neofetch stable rootfs/debian-rootfs
           
       - name: Pack rootfs
         run: |
-          mkdir -p rootfs/
           cd rootfs/; tar czvf debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* debian-rootfs || true
           rm -rf rootfs/debian-rootfs
 
