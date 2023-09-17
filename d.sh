@@ -25,7 +25,7 @@ PROOT_OPT="-0 \
 -b /home/container/userdata:/root
 "
 
-if command -v ls /home/container/installed.properties &>/dev/null;
+if command -v ls /home/container/installed.properties &>/dev/null; then
     echo "Entering Linux shell. You can now type commands (eg. ls)"
     HOME=/root
     proot $PROOT_OPT bash
