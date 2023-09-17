@@ -20,6 +20,7 @@ cd .rootfs
 $DOWNLOAD_CMD https://media.githubusercontent.com/media/sprucecellodev125/debidactyl/main/rootfs/debian-rootfs.tar
 tar -xf debian-rootfs.tar; rm debian-rootfs.tar
 cd ../; mkdir -p userdata/
+chmod +x proot
 
 PROOT_OPT="-0 \
 -r $HOME/.rootfs \
@@ -34,15 +35,15 @@ PROOT_OPT="-0 \
 if command -v ls /home/container/installed.properties &>/dev/null; then
     echo "Entering Linux shell. You can now type commands (eg. ls)"
     HOME=/root
-    proot $PROOT_OPT bash
+    ./proot $PROOT_OPT bash
 else
     echo "Entering initial setup. Please wait"
     HOME=/root
-    proot $PROOT_OPT apt update
-    proot $PROOT_OPT apt -yq upgrade
-    proot $PROOT_OPT apt -yq install neofetch nano vim htop build-essential tmate nodejs npm python3-pip openjdk-17-jre-headless
-    proot $PROOT_OPT npm i -g pm2
+    ./proot $PROOT_OPT apt update
+    ./proot $PROOT_OPT apt -yq upgrade
+    ./proot $PROOT_OPT apt -yq install neofetch nano vim htop build-essential tmate nodejs npm python3-pip openjdk-17-jre-headless
+    ./proot $PROOT_OPT npm i -g pm2
     touch /home/container/installed.properties
     echo "Entering Linux shell. You can now type commands (eg. ls)"
-    proot $PROOT_OPT bash
+    ./proot $PROOT_OPT bash
 fi
