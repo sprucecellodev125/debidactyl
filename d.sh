@@ -8,7 +8,11 @@ else
     echo "Wget or curl isn't installed. Setup cannot continue"
 fi
 
-$DOWNLOAD_CMD https://proot.gitlab.io/proot/bin/proot
+if command -v ls /home/container/installed.properties &>/dev/null; then
+	true
+else
+	$DOWNLOAD_CMD https://proot.gitlab.io/proot/bin/proot
+fi
 
 echo "Downloading rootfs, please wait ..."
 mkdir -p .rootfs

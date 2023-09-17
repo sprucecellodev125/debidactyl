@@ -1,9 +1,8 @@
 name: Build Debian RootFS
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   build:
@@ -23,7 +22,7 @@ jobs:
           
       - name: Pack rootfs
         run: |
-          cd rootfs/; tar czvf debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* debian-rootfs || true
+          cd rootfs/; tar czvf debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* --exclude=dev/* debian-rootfs || true
           rm -rf rootfs/debian-rootfs
 
       - name: Commit rootfs
