@@ -26,9 +26,16 @@ jobs:
           cd rootfs/; tar czvf debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* debian-rootfs || true
           rm -rf rootfs/debian-rootfs
 
-      - name: Upload rootfs to repository
+      - name: Commit rootfs
         run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git lfs track "*.tar"
           git add rootfs/debian-rootfs.tar
           git commit -m "Uploaded rootfs image"
-          git push origin main
+      
+      - name: Upload rootfs to repository
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
