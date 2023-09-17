@@ -1,7 +1,4 @@
 #!/bin/bash
-DEBIAN_RELEASE=bookworm
-ARCH=amd64
-RELEASE_DATE=$(date +"%Y%m%d")_05:24
 
 if command -v wget &>/dev/null; then
     DOWNLOAD_CMD=wget
@@ -13,21 +10,10 @@ fi
 
 $DOWNLOAD_CMD https://proot.gitlab.io/proot/bin/proot
 
-mkdir .rootfs
+mkdir -p .rootfs
 cd .rootfs
-
-if command -v xz &>/dev/null; then
-    $DOWNLOAD_CMD https://sgp1lxdmirror01.do.letsbuildthe.cloud/images/debian/bookworm/$ARCH/default/$RELEASE_DATE/rootfs.tar.xz
-    tar -xf rootfs.tar.xz
-else
-    echo "xz command is not found. Any Java/Bedrock servers that uses yolks isn't supported yet"
-fi
-
-if command -v ls userdata &>/dev/null; then
-    echo "Directory userdata already exist"
-else
-    mkdir userdata
-fi
+$DOWNLOAD_CMD https://media.githubusercontent.com/media/sprucecellodev125/debidactyl/main/rootfs/debian-rootfs.tar
+cd ../; mkdir -p userdata/
 
 PROOT_OPT="-0 \
 -r $HOME/.rootfs \
