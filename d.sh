@@ -8,7 +8,7 @@ else
     echo "Wget or curl isn't installed. Setup cannot continue"
 fi
 
-if ls /home/container/installed.properties &>/dev/null; then
+if [ -e /home/container/installed.properties ]; then
 	true
 else
 	$DOWNLOAD_CMD https://proot.gitlab.io/proot/bin/proot
@@ -24,7 +24,7 @@ PROOT_OPT="-0 \
 -b /home/container/userdata:/root
 "
 
-if ls /home/container/installed.properties &>/dev/null; then
+if [ -e /home/container/installed.properties ]; then
     echo "Entering Linux shell. You can now type commands (eg. ls)"
     HOME=/root
     ./proot $PROOT_OPT bash
