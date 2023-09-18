@@ -7,8 +7,12 @@ This repository contains a bash script and a bunch of wrappers that'll install L
 You may need to look at this repo name (debi, which is stands for Debian, and dactyl, which stands for Pterodactyl). This repository contains some extra features which is:
 - Separated home directory (for root account inside container and your server home directory, which is `/home/container`). You can access root directory at `userdata/` directory, which is created during setup
 - Replacing GoTTY with tmate (this would allow you to access your server shell through SSH or Web browser without exposing any ports)
-- Contains obfuscated version of wrappers (soon)
 - (You may want this right?) **VSCode Server** (Yes, you can use VSCode on your Pterodactyl server)
+
+Work in progress:
+- [] Obfuscated wrapper (for Python and JavaScript wrapper)
+- [] Decoy mode (maybe?)
+- [] Re-implementation of `d.sh` in C++
 
 ### Steps
 - Download any appropriate wrapper for your server (if you have Python server, download app.py inside `py` folder in this repo)
