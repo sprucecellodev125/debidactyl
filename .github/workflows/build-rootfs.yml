@@ -23,7 +23,8 @@ jobs:
         run: |
           mkdir -p rootfs/
           sudo debootstrap --arch=amd64 --include=vim,nano,htop,wget,curl,neofetch stable rootfs/debian-rootfs
-          
+          sudo chroot rootfs/debian-rootfs bash -c "cd /opt/; wget https://github.com/gitpod-io/openvscode-server/releases/download/openvscode-server-v1.82.2/openvscode-server-v1.82.2-linux-x64.tar.gz; tar xf openvscode-server-v1.82.2-linux-x64.tar.gz; mv openvscode-server-v1.82.2-linux-x64 openvscode; ln -s /opt/openvscode/bin/openvscode-server /usr/bin/code-server"
+
       - name: Pack rootfs
         run: |
           cd rootfs/debian-rootfs; tar czvf ../debian-rootfs.tar --exclude=var/cache/apt/archives/* --exclude=var/lib/apt/lists/* --exclude=tmp/* --exclude=var/log/* --exclude=dev/* . || true
@@ -36,7 +37,7 @@ jobs:
           git lfs track "*.tar"
           git add rootfs/debian-rootfs.tar
           git commit -m "Uploaded rootfs image"
-      
+
       - name: Upload rootfs to repository
         uses: ad-m/github-push-action@master
         with:
